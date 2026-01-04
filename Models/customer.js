@@ -28,28 +28,67 @@ const cutomerSchema = new Schema({
 const Order = mongoose.model("Order", orderSchema);
 const Customer = mongoose.model("Customer", cutomerSchema);
 
-const addCustomer = async () => {
-    //     let cust1 = new Customer({
-    //         name: "Prasad Hase",
-    //     });
+const addCustomer = async () =>{
+    let newCust = new Customer ({
+        name : "Siddhi Gavhane"
+    })
+    let newOrder = new Order ({
+        item : "Pizza",
+        price : 250
+    });
+    newCust.orders.push(newOrder);
+    await newOrder.save();
+    await newCust.save();
 
-    //     let order1 = await Order.findOne({item: "Chips"});
-    //     let order2 = await Order.findOne({item: "5star"});
-
-    //     cust1.orders.push(order1);
-    //     cust1.orders.push(order2);
-
-    //     let result = await cust1.save();
-    //     console.log(result);
-    // let result = await Customer.find({});
-    // console.log(result);
-    let result = await Customer.find({}).populate("orders");
-     
-    console.log(result[0]);
-
-
+    console.log("New Customer Added");
 }
-addCustomer();
+
+// only delete Customer not a orders so we use mongoose middleware
+const delCust = async () =>{
+    let data = await Customer.findByIdAndDelete('6959e4236fcf0070d2d5ffc2');
+    console.log("Data Deleted",data);
+}
+
+delCust();
+
+//addCustomer();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const addCustomer = async () => {
+//     //     let cust1 = new Customer({
+//     //         name: "Prasad Hase",
+//     //     });
+
+//     //     let order1 = await Order.findOne({item: "Chips"});
+//     //     let order2 = await Order.findOne({item: "5star"});
+
+//     //     cust1.orders.push(order1);
+//     //     cust1.orders.push(order2);
+
+//     //     let result = await cust1.save();
+//     //     console.log(result);
+//     // let result = await Customer.find({});
+//     // console.log(result);
+//     let result = await Customer.find({}).populate("orders");
+     
+//     console.log(result[0]);
+
+
+// }
+// addCustomer();
 
 
 
